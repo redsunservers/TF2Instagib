@@ -78,8 +78,6 @@ enum struct Config
 	float MultikillInterval;
 	float RailjumpVelXY;
 	float RailjumpVelZ;
-	bool EnabledBhop;
-	float BhopMaxSpeed;
 	
 	bool WebVersionCheck;
 	bool WebMapConfigs;
@@ -96,7 +94,6 @@ enum struct Prefs
 {
 	bool EnabledMusic;
 	int ViewmodelAlpha;
-	bool EnabledBhop;
 }
 
 static bool IsLateLoad;
@@ -130,7 +127,6 @@ ConVar g_CvarGitHubToken;
 
 Cookie g_PrefMusic;
 Cookie g_PrefViewmodel;
-Cookie g_PrefBhop;
 
 Config g_Config;
 MapConfig g_MapConfig;
@@ -148,7 +144,6 @@ bool g_SteamWorks;
 #include "instagib/hud.sp"
 #include "instagib/commands.sp"
 #include "instagib/natives.sp"
-#include "instagib/bhop.sp"
 #include "instagib/multikill.sp"
 #include "instagib/mapconfig.sp"
 #include "instagib/music.sp"

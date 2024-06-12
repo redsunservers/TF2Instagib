@@ -58,8 +58,6 @@ void LoadConfig()
 		g_Config.MaxScoreMulti = IGConfig.GetFloat("MaxScorePlayerMultiplier", 2.75);
 		g_Config.RailjumpVelXY = IGConfig.GetFloat("Railjump_VelocityMultiplier_XY", 2.9);
 		g_Config.RailjumpVelZ = IGConfig.GetFloat("Railjump_VelocityMultiplier_Z", 3.2);
-		g_Config.EnabledBhop = view_as<bool>(IGConfig.GetNum("AutoBhop", 1));
-		g_Config.BhopMaxSpeed = IGConfig.GetFloat("BhopMaxSpeed", 456.0);
 		g_Config.MultikillInterval = IGConfig.GetFloat("MultikillInterval", 3.0);
 		g_Config.InstantRespawn = view_as<bool>(IGConfig.GetNum("InstantRespawn", 0));
 		g_Config.WebVersionCheck = view_as<bool>(IGConfig.GetNum("CheckInstagibVersion", 1));
