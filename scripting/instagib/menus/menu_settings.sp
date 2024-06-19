@@ -21,6 +21,12 @@ void Menu_Settings(int client)
 		FormatEx(str, sizeof(str), "Viewmodel Visibility: %i%%", RoundFloat(float(trans)/255.0*100.0));
 		menu.AddItem("viewmodel", str);
 		
+		if (g_ClientPrefs[client].AutoBhop) {
+			menu.AddItem("bhop:0", "Auto Bhop: On");
+		} else {
+			menu.AddItem("bhop:1", "Auto Bhop: Off");
+		}
+		
 		menu.ExitButton = false;
 		menu.Display(client, 60);
 	}
@@ -55,6 +61,22 @@ public int Settings_Handler(Menu menu, MenuAction action, int client, int option
 				}
 			} else if (StrEqual(info, "viewmodel")) {
 				InstagibPrintToChat(true, client,  "Type {/instagib viewmodel (0-255)} to change weapon's transparency.");
+			} else if (StrContains(info, "bhop") != -1) {
+				char exploded[2][64];
+				ExplodeString(info, ":", exploded, sizeof(exploded), sizeof(exploded[]));
+				
+				g_PrefBhop.Set(client, exploded[1]);
+				
+				bool result = view_as<bool>(StringToInt(exploded[1]));
+				g_ClientPrefs[client].AutoBhop = result;
+				
+				if (result) {
+					InstagibPrintToChat(true, client, "You have enabled Auto Bhop.");
+					g_ClientPrefs[client].AutoBhop = true;
+				} else {
+					InstagibPrintToChat(true, client, "You have disabled Auto Bhop.");
+					g_ClientPrefs[client].AutoBhop = false;
+				}
 			}
 			
 			Menu_Settings(client);

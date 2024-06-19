@@ -78,6 +78,9 @@ enum struct Config
 	float MultikillInterval;
 	float RailjumpVelXY;
 	float RailjumpVelZ;
+	bool AutoBhop;
+	bool ManualBhop;
+	float BhopMaxSpeed;
 	
 	bool WebVersionCheck;
 	bool WebMapConfigs;
@@ -94,6 +97,7 @@ enum struct Prefs
 {
 	bool EnabledMusic;
 	int ViewmodelAlpha;
+	bool AutoBhop;
 }
 
 static bool IsLateLoad;
@@ -127,6 +131,7 @@ ConVar g_CvarGitHubToken;
 
 Cookie g_PrefMusic;
 Cookie g_PrefViewmodel;
+Cookie g_PrefBhop;
 
 Config g_Config;
 MapConfig g_MapConfig;
@@ -135,6 +140,7 @@ char g_InstagibTag[64];
 bool g_SteamWorks;
 
 // -------------------------------------------------------------------
+#include "instagib/bhop.sp"
 #include "instagib/config.sp"
 #include "instagib/cookies.sp"
 #include "instagib/particles.sp"
@@ -806,23 +812,13 @@ public void OnLibraryRemoved(const char[] name)
 
 public Action TF2Items_OnGiveNamedItem(int client, char[] classname, int index, Handle &hItem)
 {
-	static char shouldblock[][] = {
-		"tf_weapon_rocketlauncher",
-		"tf_weapon_rocketlauncher_directhit",
-		"tf_weapon_particle_cannon",
-		"tf_weapon_rocketlauncher_airstrike",
-		"tf_weapon_shotgun_soldier",
-		"tf_weapon_shotgun",
-		"tf_weapon_buff_item",
-		"tf_weapon_raygun",
-		"tf_weapon_parachute",
-		"tf_weapon_shovel",
-		"saxxy",
-		"tf_weapon_katana"
+	static char shouldallow[][] = {
+		"tf_weapon_revolver",
+		"tf_weapon_shotgun_building_rescue"
 	};
 	
-	for (int i = 0; i < sizeof(shouldblock); i++) {
-		if (StrEqual(classname, shouldblock[i])) {
+	for (int i = 0; i < sizeof(shouldallow); i++) {
+		if (!StrEqual(classname, shouldallow[i])) {
 			return Plugin_Handled;
 		}
 	}
@@ -833,3 +829,4 @@ public Action TF2Items_OnGiveNamedItem(int client, char[] classname, int index, 
 		return Plugin_Continue;
 	}
 }
+
