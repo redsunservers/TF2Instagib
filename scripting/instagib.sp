@@ -123,6 +123,7 @@ char g_InstagibTag[64];
 bool g_SteamWorks;
 
 // -------------------------------------------------------------------
+#include "instagib/bhop.sp"
 #include "instagib/config.sp"
 #include "instagib/cookies.sp"
 #include "instagib/particles.sp"
@@ -132,7 +133,6 @@ bool g_SteamWorks;
 #include "instagib/hud.sp"
 #include "instagib/commands.sp"
 #include "instagib/natives.sp"
-#include "instagib/bhop.sp"
 #include "instagib/multikill.sp"
 #include "instagib/mapconfig.sp"
 #include "instagib/music.sp"
