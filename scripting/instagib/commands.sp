@@ -29,33 +29,6 @@ public Action Command_BlockAutoTeam(int client, int args)
 
 public Action Command_Settings(int client, int args)
 {
-	if (args > 0) {
-		char arg1[256];
-		GetCmdArg(1, arg1, sizeof(arg1));
-		
-		if (StrEqual(arg1, "viewmodel", false)) {
-			char arg2[128];
-			GetCmdArg(2, arg2, sizeof(arg2));
-			
-			int value = StringToInt(arg2);
-			
-			if (value < 0 || value > 255 || args < 2) {
-				InstagibPrintToChat(true, client, "Usage: {/instagib viewmodel (0-255)}.");
-			} else {
-				SetClientCookie(client, g_PrefViewmodel, arg2);
-				g_ClientPrefs[client].ViewmodelAlpha = value;
-				
-				if (IsValidEntity(g_MainWeaponEnt[client])) {
-					SetEntityRenderColor(g_MainWeaponEnt[client], .a = value);
-				}
-				
-				InstagibPrintToChat(true, client, "Weapon's transparency was set to %i.", value);
-			}
-			
-			return Plugin_Handled;
-		}
-	}
-	
 	Menu_Main(client);
 	
 	return Plugin_Handled;

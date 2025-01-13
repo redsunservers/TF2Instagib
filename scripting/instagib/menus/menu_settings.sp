@@ -15,12 +15,6 @@ void Menu_Settings(int client)
 			}
 		}
 		
-		int trans = g_ClientPrefs[client].ViewmodelAlpha;
-		char str[64];
-		
-		FormatEx(str, sizeof(str), "Viewmodel Visibility: %i%%", RoundFloat(float(trans)/255.0*100.0));
-		menu.AddItem("viewmodel", str);
-		
 		if (g_ClientPrefs[client].AutoBhop) {
 			menu.AddItem("bhop:0", "Auto Bhop: On");
 		} else {
@@ -59,8 +53,6 @@ public int Settings_Handler(Menu menu, MenuAction action, int client, int option
 					g_ClientPrefs[client].EnabledMusic = false;
 					StopMusic(client);
 				}
-			} else if (StrEqual(info, "viewmodel")) {
-				InstagibPrintToChat(true, client,  "Type {/instagib viewmodel (0-255)} to change weapon's transparency.");
 			} else if (StrContains(info, "bhop") != -1) {
 				char exploded[2][64];
 				ExplodeString(info, ":", exploded, sizeof(exploded), sizeof(exploded[]));

@@ -79,7 +79,6 @@ enum struct MapConfig
 enum struct Prefs
 {
 	bool EnabledMusic;
-	int ViewmodelAlpha;
 	bool AutoBhop;
 }
 
@@ -122,7 +121,6 @@ ConVar g_CvarHumansMustJoinTeam;
 ConVar g_CvarAvoidTeammates;
 
 Cookie g_PrefMusic;
-Cookie g_PrefViewmodel;
 Cookie g_PrefBhop;
 
 Config g_Config;
@@ -207,11 +205,6 @@ int GiveWeapon(int client, Handle Weapon, bool is_railgun = true)
 	if (IsValidEntity(ent)) {
 		if (is_railgun) {
 			SetEntProp(ent, Prop_Data, "m_iClip1", g_CurrentRound.MainWeaponClip);
-			SetEntityRenderMode(ent, RENDER_TRANSCOLOR);
-			
-			if (AreClientCookiesCached(client)) {
-				SetEntityRenderColor(ent, .a = g_ClientPrefs[client].ViewmodelAlpha);
-			}
 		}
 		
 		if (IsClientInGame(client) && IsClientPlaying(client) && IsPlayerAlive(client)) {
@@ -863,15 +856,15 @@ public Action TF2Items_OnGiveNamedItem(int client, char[] classname, int index, 
 }
 
 void AddConvarToSilent(const char[] name) {
-    ConVar cvar = FindConVar(name);
-    if(cvar != null) {
-        g_OriginalFlags[g_ConvarCount] = cvar.Flags;
-        g_Convars[g_ConvarCount] = cvar;
-        
-        cvar.Flags &= ~FCVAR_NOTIFY;
-        
-        g_ConvarCount++;
-    }
+	ConVar cvar = FindConVar(name);
+	if(cvar != null) {
+		g_OriginalFlags[g_ConvarCount] = cvar.Flags;
+		g_Convars[g_ConvarCount] = cvar;
+		
+		cvar.Flags &= ~FCVAR_NOTIFY;
+		
+		g_ConvarCount++;
+	}
 }
 
 void RestoreConvarsFlags() {
@@ -881,11 +874,11 @@ void RestoreConvarsFlags() {
 }
 
 public Action Timer_ForceClass(Handle timer, any client) {
-    if (client > 0 && client <= MaxClients && IsClientInGame(client)) {
+	if (client > 0 && client <= MaxClients && IsClientInGame(client)) {
 		TFClassType randomclass = g_CurrentRound.GetRandomClass();
-        TF2_SetPlayerClass(client, randomclass);
-        TF2_RegeneratePlayer(client);
-    }
-    
-    return Plugin_Stop;
+		TF2_SetPlayerClass(client, randomclass);
+		TF2_RegeneratePlayer(client);
+	}
+	
+	return Plugin_Stop;
 }
